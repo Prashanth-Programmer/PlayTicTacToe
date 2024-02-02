@@ -34,4 +34,18 @@ public class Board {
             cells.add(rowCells);
         }
     }
+
+    public void displayBoard(){
+        for(List<Cell> row : cells){
+            for(Cell cell : row){
+                if(cell.getCellState().equals(CellState.EMPTY)){
+                    System.out.print("| - |");
+                }
+                else{
+                    System.out.print("| "+cell.getPlayer().getSymbol().getaChar()+ " |");
+                }
+            }
+            System.out.println();
+        }
+    }
 }

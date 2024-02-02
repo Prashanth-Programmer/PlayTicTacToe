@@ -3,7 +3,9 @@ package Controllers;
 import Exceptions.BotCountException;
 import Exceptions.PlayerCountException;
 import Exceptions.SymbolException;
+import Models.Board;
 import Models.Game;
+import Models.GameState;
 import Models.Player;
 import Strategies.WinningStrategies;
 
@@ -16,8 +18,15 @@ public class GameController {
                 setWinningStrategies(winningStrategies).build();
     }
 
-    public void makeMove(){
+    public GameState checkGameState(Game game){
+        return game.getGameState();
+    }
 
+    public void displayBoard(Game game){
+        game.displayBoard();
+    }
+    public void makeMove(Game game){
+        game.makeMove();
     }
 
 

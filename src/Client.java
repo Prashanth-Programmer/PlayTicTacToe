@@ -14,13 +14,17 @@ public class Client {
             players.add(new Player(1, "AB", new Symbol('X'), PlayerType.HUMAN));
             players.add(new Bot(2, "GPT", new Symbol('O'), PlayerType.BOT, DifficultyLevel.EASY));
             List<WinningStrategies> winningStrategies = new ArrayList<>();
-            gameController.startGame(dimensions, players, winningStrategies);
+            Game game = gameController.startGame(dimensions, players, winningStrategies);
+            System.out.println("Create Game successfully");
+            while(game.getGameState().equals(GameState.IN_PROGRESS)){
+                gameController.displayBoard(game);
+                gameController.makeMove(game);
+            }
         }
         catch (Exception ex)
         {
             System.out.println("Something went wrong "+ex);
-            return;
         }
-        System.out.println("Create Game successfully");
+
     }
 }

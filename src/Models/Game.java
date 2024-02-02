@@ -87,6 +87,53 @@ public class Game {
         return new Builder();
     }
 
+    public void displayBoard(){
+        this.board.displayBoard();
+    }
+
+    public void makeMove(){
+        Player currentPlayer = this.getPlayers().get(getNextPlayerTurnIndex());
+        System.out.println("It is "+currentPlayer.getName()+ " turn");
+        Move userMove = currentPlayer.makeMove(this.board);
+        boolean isValid = validatePlayerMove(userMove);
+        if(!isValid){
+            System.out.println("Invalid position to make move");
+            return;
+        }
+        int row = userMove.getCell().getRow();
+        int col = userMove.getCell().getCol();
+        Cell actualCell = board.getCells().get(row).get(col);
+        actualCell.setCellState(CellState.FILLED);
+        actualCell.setPlayer(currentPlayer);
+        userMove = new Move(actualCell, currentPlayer);
+        moves.add(userMove);
+
+        nextPlayerTurnIndex += 1;
+        nextPlayerTurnIndex %= players.size();
+
+        //code winning strategy
+        //O(1) check for draw
+        if(moves.size() == board.getSize() * board.getSize()){
+            setGameState(GameState.DRAW);
+            System.out.println("game is drawn");
+        }
+    }
+
+    private  boolean validatePlayerMove(Move move){
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+        if(row < 0 || row >= board.getSize()){
+            return  false;
+        }
+        if(col < 0 || col >= board.getSize()){
+            return  false;
+        }
+        if(board.getCells().get(row).get(col).getCellState().equals(CellState.FILLED)){
+            return  false;
+        }
+        return  true;
+    }
+
     public static class Builder{
         private int dimension;
         private List<Player> playerList;

@@ -1,10 +1,14 @@
 package Models;
 
+import java.util.Scanner;
+
 public class Player {
     private int id;
     private String name;
     private Symbol symbol;
     private PlayerType playerType;
+
+    private Scanner scanner;
 
     public int getId() {
         return id;
@@ -43,5 +47,15 @@ public class Player {
         this.name = name;
         this.symbol = symbol;
         this.playerType = playerType;
+        this.scanner = new Scanner(System.in);
+    }
+    public Move makeMove(Board board){
+        System.out.println("please enter the row");
+        int row = this.scanner.nextInt();
+
+        System.out.println("please enter the column");
+        int col = this.scanner.nextInt();
+
+        return new Move(new Cell(row, col), this);
     }
 }
