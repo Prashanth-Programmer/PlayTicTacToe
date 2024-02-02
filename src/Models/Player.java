@@ -37,4 +37,11 @@ public class Player {
     public void setPlayerType(PlayerType playerType) {
         this.playerType = playerType;
     }
+
+    public Player(int id, String name, Symbol symbol, PlayerType playerType){
+        this.id = id;
+        this.name = name;
+        this.symbol = symbol;
+        this.playerType = playerType;
+    }
 }
