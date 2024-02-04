@@ -95,6 +95,7 @@ public class Game {
         Player currentPlayer = this.getPlayers().get(getNextPlayerTurnIndex());
         System.out.println("It is "+currentPlayer.getName()+ " turn");
         Move userMove = currentPlayer.makeMove(this.board);
+        System.out.println(currentPlayer.getName()+" made a move at ( "+ userMove.getCell().getRow() + ","+ userMove.getCell().getCol() +" )");
         boolean isValid = validatePlayerMove(userMove);
         if(!isValid){
             System.out.println("Invalid position to make move");
@@ -112,10 +113,17 @@ public class Game {
         nextPlayerTurnIndex %= players.size();
 
         //code winning strategy
+        for (WinningStrategies winningStrategy : winningStrategies){
+            if(winningStrategy.checkWinner(board, userMove)){
+                setGameState(GameState.WIN);
+                setWinner(currentPlayer);
+                return;
+            }
+        }
         //O(1) check for draw
         if(moves.size() == board.getSize() * board.getSize()){
             setGameState(GameState.DRAW);
-            System.out.println("game is drawn");
+            return;
         }
     }
 
